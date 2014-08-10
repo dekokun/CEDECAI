@@ -10,6 +10,9 @@ class StdIO {
     public function getIn() {
         return fgets($this->fp);
     }
+    public function getInArray() {
+        return explode(' ', rtrim($this->getIn()));
+    }
     public function outPut($data) {
         echo $data;
     }
@@ -44,7 +47,6 @@ class Game {
     protected $heroines = [];
 
     public function __construct() {
-        logging('hogehoge');
         $this->io = new StdIO(fopen('php://stdin', 'r'));
     }
 
@@ -60,28 +62,28 @@ class Game {
     }
 
     function readGameSetting() {
-        $gameSettings = explode(' ', rtrim($this->io->getIn()));
+        $gameSettings = $this->io->getInArray();
         $this->maxTurn = $gameSettings[0];
         $this->numOfPlayers = $gameSettings[1];
         $this->numOfHeroines = $gameSettings[2];
 
-        $gameSettings = explode(' ', rtrim($this->io->getIn()));
+        $gameSettings = $this->io->getInArray();
         foreach ($gameSettings as $enthusiasm) {
             array_push($this->heroines, new Heroine((integer)$enthusiasm));
         }
     }
 
     function readData() {
-        list($turn, $this->day) = explode(' ', rtrim($this->io->getIn()));
+        list($turn, $this->day) = $this->io->getInArray();
         for ($i = 0; $i < $this->numOfHeroines; $i++) {
-            $revealedScores = explode(' ', rtrim($this->io->getIn()));
+            $revealedScores = $this->io->getInArray();
         }
-        $realScores = explode(' ', rtrim($this->io->getIn()));
+        $realScores = $this->io->getInArray();
         for ($i = 0; $i < $this->numOfHeroines; $i++) {
             $this->heroines[$i]->setRealScore((integer)$realScores[$i]);
         }
         if ($this->day === 'W') {
-            $dated = explode(' ', rtrim($this->io->getIn()));
+            $dated = $this->io->getInArray();
             for ($i = 0; $i < $this->numOfHeroines; $i++) {
                 $this->heroines[$i]->setDated((integer)$dated[$i]);
             }
