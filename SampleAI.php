@@ -21,6 +21,23 @@ class StdIO {
     }
 }
 
+class GameSettings {
+    public $maxTurn;
+    public $numOfPlayers;
+    public $numOfHeroines;
+    public $enthusiasms;
+
+    function setSettingOne(array $input) {
+        $this->maxTurn = $input[0];
+        $this->numOfPlayers = $input[1];
+        $this->numOfHeroines = $input[2];
+    }
+
+    function setSettingTwo(array $input) {
+        $this->enthusiasms = $input;
+    }
+}
+
 function logging($message) {
     $message = $message . PHP_EOL;
     fputs(STDERR,$message);
@@ -39,9 +56,10 @@ class Game {
      * @var StdIO
      */
     protected $io;
-    protected $maxTurn;
-    protected $numOfPlayers;
-    protected $numOfHeroines;
+    /**
+     * @var GameSettings
+     */
+    protected $setting;
     protected $turn;
     protected $day;
     protected $heroines = [];
@@ -54,7 +72,7 @@ class Game {
         $this->io->outPut('READY');
         $this->readGameSetting();
 
-        for ($i = 0; $i < $this->maxTurn; $i++) {
+        for ($i = 0; $i < $this->setting->maxTurn; $i++) {
             $this->readData();
             $this->writeCommand();
         }
@@ -62,29 +80,27 @@ class Game {
     }
 
     function readGameSetting() {
-        $gameSettings = $this->io->getInArray();
-        $this->maxTurn = $gameSettings[0];
-        $this->numOfPlayers = $gameSettings[1];
-        $this->numOfHeroines = $gameSettings[2];
+        $this->setting = new GameSettings();
+        $this->setting->setSettingOne($this->io->getInArray());
 
-        $gameSettings = $this->io->getInArray();
-        foreach ($gameSettings as $enthusiasm) {
+        $this->setting->setSettingTwo($this->io->getInArray());
+        foreach ($this->setting->enthusiasms as $enthusiasm) {
             array_push($this->heroines, new Heroine((integer)$enthusiasm));
         }
     }
 
     function readData() {
         list($turn, $this->day) = $this->io->getInArray();
-        for ($i = 0; $i < $this->numOfHeroines; $i++) {
+        for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $revealedScores = $this->io->getInArray();
         }
         $realScores = $this->io->getInArray();
-        for ($i = 0; $i < $this->numOfHeroines; $i++) {
+        for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $this->heroines[$i]->setRealScore((integer)$realScores[$i]);
         }
         if ($this->day === 'W') {
             $dated = $this->io->getInArray();
-            for ($i = 0; $i < $this->numOfHeroines; $i++) {
+            for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
                 $this->heroines[$i]->setDated((integer)$dated[$i]);
             }
         }
@@ -94,10 +110,10 @@ class Game {
         $heroineNums = [];
         if ($this->day === 'W') {
             for ($i = 0; $i < 5; $i++) {
-                $heroineNums[] = mt_rand(0, $this->numOfHeroines - 3);
+                $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 3);
             }
         } else {
-            $heroineNums[] = mt_rand(0, $this->numOfHeroines - 1) . ' ' . mt_rand(0, $this->numOfHeroines - 3);
+            $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 1) . ' ' . mt_rand(0, $this->setting->numOfHeroines - 3);
         }
         $this->io->outPutArray($heroineNums);
     }
