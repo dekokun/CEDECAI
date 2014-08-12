@@ -21,6 +21,51 @@ class StdIO {
     }
 }
 
+class Turn {
+    const WEEKDAY = 'W';
+    const HOLIDAY = 'H';
+
+    protected $turn;
+    protected $dayKind;
+
+    public function __construct($turn, $dayKind) {
+        $this->turn = $turn;
+        $this->dayKind = $dayKind;
+    }
+
+    public function getTurn() {
+        return $this->turn;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHoliday() {
+        return ($this->dayKind === static::HOLIDAY);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWeekDay() {
+        return (! $this->isHoliday());
+    }
+
+    /**
+     * @return bool
+     */
+    public function previousTurnIsHoliday() {
+        return (! $this->isHoliday());
+    }
+
+    /**
+     * @return bool
+     */
+    public function previousTurnIsWeekDay() {
+        return (! $this->isHoliday());
+    }
+}
+
 class GameSettings {
     public $maxTurn;
     public $numOfPlayers;
@@ -63,8 +108,10 @@ class Game {
      * @var GameSettings
      */
     protected $setting;
+    /**
+     * @var Turn
+     */
     protected $turn;
-    protected $day;
     protected $heroines = [];
 
     public function __construct() {
@@ -93,7 +140,8 @@ class Game {
     }
 
     private function readData() {
-        list($turn, $this->day) = $this->io->getInArray();
+        list($turn, $day) = $this->io->getInArray();
+        $this->turn = new Turn($turn, $day);
         for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $revealedScores = $this->io->getInArray();
         }
@@ -101,7 +149,7 @@ class Game {
         for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $this->heroines[$i]->setRealScore((integer)$realScores[$i]);
         }
-        if ($this->day === 'W') {
+        if ($this->turn->previousTurnIsHoliday()) {
             $dated = $this->io->getInArray();
             for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
                 $this->heroines[$i]->setDated((integer)$dated[$i]);
@@ -111,7 +159,7 @@ class Game {
 
     private function writeCommand() {
         $heroineNums = [];
-        if ($this->day === 'W') {
+        if ($this->turn->isWeekDay()) {
             for ($i = 0; $i < 5; $i++) {
                 $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 3);
             }
