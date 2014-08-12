@@ -27,13 +27,13 @@ class GameSettings {
     public $numOfHeroines;
     public $enthusiasms;
 
-    function setSettingOne(array $input) {
+    public function setSettingOne(array $input) {
         $this->maxTurn = $input[0];
         $this->numOfPlayers = $input[1];
         $this->numOfHeroines = $input[2];
     }
 
-    function setSettingTwo(array $input) {
+    public function setSettingTwo(array $input) {
         $this->enthusiasms = $input;
     }
 }
@@ -79,7 +79,7 @@ class Game {
 
     }
 
-    function readGameSetting() {
+    private function readGameSetting() {
         $this->setting = new GameSettings();
         $this->setting->setSettingOne($this->io->getInArray());
 
@@ -89,7 +89,7 @@ class Game {
         }
     }
 
-    function readData() {
+    private function readData() {
         list($turn, $this->day) = $this->io->getInArray();
         for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $revealedScores = $this->io->getInArray();
@@ -106,7 +106,7 @@ class Game {
         }
     }
 
-    function writeCommand() {
+    private function writeCommand() {
         $heroineNums = [];
         if ($this->day === 'W') {
             for ($i = 0; $i < 5; $i++) {
