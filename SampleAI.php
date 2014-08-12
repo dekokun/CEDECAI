@@ -66,6 +66,7 @@ class Game {
 
     public function __construct() {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
+        $this->setting = new GameSettings();
     }
 
     public function main() {
@@ -80,7 +81,6 @@ class Game {
     }
 
     private function readGameSetting() {
-        $this->setting = new GameSettings();
         $this->setting->setSettingOne($this->io->getInArray());
 
         $this->setting->setSettingTwo($this->io->getInArray());
