@@ -39,6 +39,9 @@ class GameSettings {
 }
 
 function logging($message) {
+    if (is_array($message)) {
+        $message = print_r($message, true);
+    }
     $message = $message . PHP_EOL;
     fputs(STDERR,$message);
     error_log($message, 3, '/tmp/hoge.log');
