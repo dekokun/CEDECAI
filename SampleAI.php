@@ -158,11 +158,12 @@ class Game {
     private function writeCommand() {
         $heroineNums = [];
         if ($this->turn->isWeekDay()) {
-            for ($i = 0; $i < 5; $i++) {
-                $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 3);
-            }
+            $actionNum = 5;
         } else {
-            $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 1) . ' ' . mt_rand(0, $this->setting->numOfHeroines - 3);
+            $actionNum = 2;
+        }
+        for ($i = 0; $i < $actionNum; $i++) {
+            $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 3);
         }
         $this->io->outPutArray($heroineNums);
     }
