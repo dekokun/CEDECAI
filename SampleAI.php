@@ -25,48 +25,48 @@ class Turn {
     const WEEKDAY = 'W';
     const HOLIDAY = 'H';
 
-    protected $turn;
-    protected $dayKind;
+    protected $nextTurn;
+    protected $nextDayKind;
 
     public function __construct($turn, $dayKind) {
-        $this->turn = $turn;
-        $this->dayKind = $dayKind;
+        $this->nextTurn = $turn;
+        $this->nextDayKind = $dayKind;
     }
 
-    public function getTurn() {
-        return $this->turn;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHoliday() {
-        return ($this->dayKind === static::HOLIDAY);
+    public function getNextTurn() {
+        return $this->nextTurn;
     }
 
     /**
      * @return bool
      */
-    public function isWeekDay() {
-        return (! $this->isHoliday());
+    public function nextTurnIsHoliday() {
+        return ($this->nextDayKind === static::HOLIDAY);
+    }
+
+    /**
+     * @return bool
+     */
+    public function nextTurnIsWeekDay() {
+        return (! $this->nextTurnIsHoliday());
     }
 
     /**
      * @return bool
      */
     public function previousTurnIsHoliday() {
-        return (! $this->isHoliday());
+        return (! $this->nextTurnIsHoliday());
     }
 
     /**
      * @return bool
      */
     public function previousTurnIsWeekDay() {
-        return (! $this->isHoliday());
+        return (! $this->nextTurnIsHoliday());
     }
 
     public function nextDayCount() {
-        if ($this->isWeekDay()) {
+        if ($this->nextTurnIsWeekDay()) {
             return 5;
         }
         return 2;
