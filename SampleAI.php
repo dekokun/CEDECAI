@@ -139,17 +139,17 @@ class Game {
     private function readData() {
         list($turn, $day) = $this->io->getInArray();
         $this->turn = new Turn($turn, $day);
-        for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
+        foreach($this->heroines as $i => $_) {
             $revealedScores = $this->io->getInArray();
             $this->heroines[$i]->setRevealedScores($revealedScores);
         }
         $realScores = $this->io->getInArray();
-        for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
+        foreach($this->heroines as $i => $_) {
             $this->heroines[$i]->setRealScore((integer)$realScores[$i]);
         }
         if ($this->turn->previousTurnIsHoliday()) {
             $dated = $this->io->getInArray();
-            for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
+            foreach($this->heroines as $i => $_) {
                 $this->heroines[$i]->setDated((integer)$dated[$i]);
             }
         }
@@ -215,3 +215,4 @@ class Heroine {
         $this->dated = $dated;
     }
 }
+
