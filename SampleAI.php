@@ -181,10 +181,18 @@ class Game {
      * @var Heroines
      */
     protected $heroines;
+    /**
+     * @var RuleSelector
+     */
+    protected $ruleSelector;
 
     public function __construct() {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
         $this->setting = new GameSettings();
+        $this->ruleSelector = new RuleSelector([
+            new RandomHolidayRule(),
+            new RandomWeekdayRule(),
+        ]);
     }
 
     public function main() {
@@ -193,7 +201,11 @@ class Game {
 
         for ($i = 0; $i < $this->setting->maxTurn; $i++) {
             $this->readData();
-            $this->writeCommand();
+            $heroineNums
+                = $this->ruleSelector
+                ->choice($this->heroines, $this->turn)
+                ->result($this->heroines, $this->turn);
+            $this->io->outPutArray($heroineNums);
         }
 
     }
@@ -227,15 +239,6 @@ class Game {
             }
         }
     }
-
-    private function writeCommand() {
-        $heroineNums = [];
-        for ($i = 0; $i < $this->turn->nextDayCount(); $i++) {
-            $heroineNums[] = mt_rand(0, $this->setting->numOfHeroines - 3);
-        }
-        $this->io->outPutArray($heroineNums);
-    }
-
 }
 
 
@@ -292,5 +295,73 @@ class Heroine {
     public function setDated($dated) {
         $this->dateCount += $dated;
         $this->dated = $dated;
+    }
+}
+
+class RuleSelector {
+    protected $rules = [];
+
+    public function __construct(array $rules) {
+        $this->rules = $rules;
+    }
+
+    /**
+     * @param Heroines $heroines
+     * @param Turn $turn
+     * @return Rule
+     */
+    public function choice(Heroines $heroines, Turn $turn) {
+        $evaluatedValues = array_map(function(Rule $rule) use($heroines, $turn) {
+            return $rule->evaluate($heroines, $turn);
+        }, $this->rules);
+        return $this->rules[array_search(max($evaluatedValues), $evaluatedValues)];
+    }
+}
+
+abstract class Rule {
+    /**
+     * @param Heroines $heroines
+     * @param Turn $turn
+     * @return int
+     */
+    abstract public function evaluate(Heroines $heroines, Turn $turn);
+
+    /**
+     * @param Heroines $heroines
+     * @param Turn $turn
+     * @return array
+     */
+    abstract public function result(Heroines $heroines, Turn $turn);
+}
+
+class RandomHolidayRule extends Rule {
+    public function evaluate(Heroines $heroines, Turn $turn) {
+        if ($turn->nextTurnIsWeekDay()) {
+            return 0;
+        }
+        return 1;
+    }
+    public function result(Heroines $heroines, Turn $turn) {
+        $heroineNums = [];
+        for ($i = 0; $i < $turn->nextDayCount(); $i++) {
+            $heroineNums[] = mt_rand(0, count($heroines) - 3);
+        }
+        return $heroineNums;
+    }
+}
+
+class RandomWeekdayRule extends Rule {
+    public function evaluate(Heroines $heroines, Turn $turn) {
+        if ($turn->nextTurnIsHoliday()) {
+            return 0;
+        }
+        return 1;
+    }
+    public function result(Heroines $heroines, Turn $turn) {
+        $heroineNums = [];
+        for ($i = 0; $i < $turn->nextDayCount(); $i++) {
+            $heroineNums[] = mt_rand(0, count($heroines) - 3);
+        }
+        return $heroineNums;
     }
 }
