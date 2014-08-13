@@ -141,6 +141,7 @@ class Game {
         $this->turn = new Turn($turn, $day);
         for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
             $revealedScores = $this->io->getInArray();
+            $this->heroines[$i]->setRevealedScores($revealedScores);
         }
         $realScores = $this->io->getInArray();
         for ($i = 0; $i < $this->setting->numOfHeroines; $i++) {
@@ -171,13 +172,13 @@ class Game {
 
 class Heroine {
     private $enthusiasm;
-    private $revealedScore;
+    private $revealedScores;
     private $realScore;
     private $dated;
 
-    function __construct($enthusiasm = 0, $revealedScore = 0, $realScore = 0, $dated = 0) {
+    function __construct($enthusiasm = 0, array $revealedScores = [], $realScore = 0, $dated = 0) {
         $this->enthusiasm = $enthusiasm;
-        $this->revealedScore = $revealedScore;
+        $this->revealedScores = $revealedScores;
         $this->realScore = $realScore;
         $this->dated = $dated;
     }
@@ -191,10 +192,10 @@ class Heroine {
     }
 
     public function getRevealedScore() {
-        return $this->revealedScore;
+        return $this->revealedScores;
     }
 
-    public function setRevealedScore($revealedScore) {
+    public function setRevealedScores($revealedScore) {
         $this->revealedScore = $revealedScore;
     }
 
