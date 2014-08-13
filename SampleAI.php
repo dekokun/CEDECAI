@@ -92,7 +92,7 @@ class GameSettings {
 
 function logging($message) {
     $message = var_export($message, true) . PHP_EOL;
-    fputs(STDERR,$message);
+    fputs(STDERR, $message);
     error_log($message, 3, '/tmp/hoge.log');
 }
 
@@ -183,7 +183,12 @@ class Heroine {
     private $dated;
     private $dateCount = 0;
 
-    function __construct($enthusiasm = 0, array $revealedScores = [], $realScore = 0, $dated = 0) {
+    function __construct(
+        $enthusiasm = 0,
+        array $revealedScores = [],
+        $realScore = 0,
+        $dated = 0
+    ) {
         $this->enthusiasm = $enthusiasm;
         $this->revealedScores = $revealedScores;
         $this->realScore = $realScore;
