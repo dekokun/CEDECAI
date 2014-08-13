@@ -116,6 +116,9 @@ class Game {
      * @var Turn
      */
     protected $turn;
+    /**
+     * @var array Heroine
+     */
     protected $heroines = [];
 
     public function __construct() {
@@ -200,7 +203,7 @@ class Heroine {
     }
 
     public function setRevealedScores($revealedScore) {
-        $this->revealedScore = $revealedScore;
+        $this->revealedScores = $revealedScore;
     }
 
     public function getRealScore() {
