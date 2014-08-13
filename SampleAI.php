@@ -178,6 +178,7 @@ class Heroine {
     private $revealedScores;
     private $realScore;
     private $dated;
+    private $dateCount = 0;
 
     function __construct($enthusiasm = 0, array $revealedScores = [], $realScore = 0, $dated = 0) {
         $this->enthusiasm = $enthusiasm;
@@ -214,7 +215,11 @@ class Heroine {
         return $this->dated;
     }
 
+    public function getDateCount() {
+        return $this->dateCount;
+    }
     public function setDated($dated) {
+        $this->dateCount += $dated;
         $this->dated = $dated;
     }
 }
