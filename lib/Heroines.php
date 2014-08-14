@@ -9,22 +9,39 @@ class Heroines implements ArrayAccess, Iterator, Countable {
     }
 
     /**
-     * @return \Heroine[]
+     * @return \Heroines
      */
     public function getMaxEnthusiasmHeroines() {
-        return array_filter($this->toArray(), function(\Heroine $heroine) {
+        return new static(
+            array_filter($this->toArray(), function(\Heroine $heroine) {
             return $heroine->getEnthusiasm() === $this->getMaxEnthusiasm();
-        });
+        }));
     }
 
     /**
      * @return int
      */
     public function getMaxEnthusiasm() {
-        return max(array_map(function(\Heroine $heroine) {
-            return $heroine->getEnthusiasm();
-        }, $this->toArray()));
+        return max($this->getEnthusiasms());
     }
+
+    /**
+     * @return \Heroine
+     */
+    public function getRandomHeroine() {
+        $heroines = $this->toArray();
+        shuffle($heroines);
+        return end($heroines);
+    }
+    /**
+     * @return array
+     */
+    private function getEnthusiasms() {
+        return array_map(function(\Heroine $heroine) {
+            return $heroine->getEnthusiasm();
+        }, $this->toArray());
+    }
+
 
     /**
      * @return \Heroine[]

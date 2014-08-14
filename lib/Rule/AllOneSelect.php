@@ -13,7 +13,7 @@ class AllOneSelect extends Rule {
     public function result(\Heroines $heroines, \Turn $turn) {
         $heroineNums = [];
         $maxHeroines = $heroines->getMaxEnthusiasmHeroines();
-        $selectedHeroine = end($maxHeroines);
+        $selectedHeroine = $maxHeroines->getRandomHeroine();
         for ($i = 0; $i < $turn->nextDayCount(); $i++) {
             $heroineNums[] = $selectedHeroine->getIndex();
         }

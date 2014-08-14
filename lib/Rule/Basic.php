@@ -8,8 +8,10 @@ class Basic extends Rule {
     }
     public function result(\Heroines $heroines, \Turn $turn) {
         $heroineNums = [];
-        foreach($turn->dayIter() as $_) {
-            $heroineNums[] = mt_rand(0, count($heroines));
+        if ($turn->nextTurnIsWeekDay()) {
+            foreach($turn->dayIter() as $_) {
+                $heroineNums[] = $heroines->getRandomHeroine()->getIndex();
+            }
         }
         return $heroineNums;
     }
