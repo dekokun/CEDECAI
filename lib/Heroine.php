@@ -6,19 +6,29 @@ class Heroine {
     private $realScore;
     private $dated;
     private $dateCount = 0;
+    private $index;
 
     function __construct(
+        $index,
         $enthusiasm = 0,
         array $revealedScores = [],
         $realScore = 0,
         $dated = 0
     ) {
+        $this->index = $index;
         $this->enthusiasm = $enthusiasm;
         $this->revealedScores = $revealedScores;
         $this->realScore = $realScore;
         $this->dated = $dated;
     }
 
+    public function getIndex() {
+        return $this->index;
+    }
+
+    /**
+     * @return int
+     */
     public function getEnthusiasm() {
         return $this->enthusiasm;
     }

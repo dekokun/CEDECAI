@@ -18,6 +18,10 @@ class RuleSelector {
         $evaluatedValues = array_map(function(Rule $rule) use($heroines, $turn) {
             return $rule->evaluate($heroines, $turn);
         }, $this->rules);
-        return $this->rules[array_search(max($evaluatedValues), $evaluatedValues)];
+        $selectedRule = $this->rules[array_search(
+            max($evaluatedValues), $evaluatedValues
+        )];
+        logging('selected rule: ' . get_class($selectedRule));
+        return $selectedRule;
     }
 }

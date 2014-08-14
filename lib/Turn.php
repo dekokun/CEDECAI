@@ -8,10 +8,13 @@ class Turn {
     protected $nextDayKind;
 
     public function __construct($turn, $dayKind) {
-        $this->nextTurn = $turn;
+        $this->nextTurn = intval($turn);
         $this->nextDayKind = $dayKind;
     }
 
+    /**
+     * @return int
+     */
     public function getNextTurn() {
         return $this->nextTurn;
     }

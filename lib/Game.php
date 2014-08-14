@@ -27,8 +27,8 @@ class Game {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
         $this->setting = new GameSettings();
         $this->ruleSelector = new \Rule\RuleSelector([
-            new \Rule\RandomHoliday(),
-            new \Rule\RandomWeekday(),
+            new \Rule\Basic(),
+            new \Rule\AllOneSelect(),
         ]);
     }
 
@@ -52,8 +52,8 @@ class Game {
 
         $this->setting->setSettingTwo($this->io->getInArray());
         $heroines = [];
-        foreach ($this->setting->enthusiasms as $enthusiasm) {
-            array_push($heroines, new Heroine((integer)$enthusiasm));
+        foreach ($this->setting->enthusiasms as $index => $enthusiasm) {
+            array_push($heroines, new Heroine($index, (integer)$enthusiasm));
         }
         $this->heroines = new Heroines($heroines);
     }

@@ -8,6 +8,31 @@ class Heroines implements ArrayAccess, Iterator, Countable {
         $this->heroines = $heroines;
     }
 
+    /**
+     * @return \Heroine[]
+     */
+    public function getMaxEnthusiasmHeroines() {
+        return array_filter($this->toArray(), function(\Heroine $heroine) {
+            return $heroine->getEnthusiasm() === $this->getMaxEnthusiasm();
+        });
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxEnthusiasm() {
+        return max(array_map(function(\Heroine $heroine) {
+            return $heroine->getEnthusiasm();
+        }, $this->toArray()));
+    }
+
+    /**
+     * @return \Heroine[]
+     */
+    public function toArray() {
+        return $this->heroines;
+    }
+
     public function rewind()  {
         reset($this->heroines);
     }
@@ -58,5 +83,6 @@ class Heroines implements ArrayAccess, Iterator, Countable {
     public function offsetUnset ($offset ) {
         unset($this->heroines[$offset]);
     }
+
 }
 
