@@ -12,6 +12,10 @@ class Basic extends Rule {
             foreach($turn->dayIter() as $_) {
                 $resultHeroines[] = $heroines->getRandomHeroine();
             }
+        } else {
+            foreach($turn->dayIter() as $_) {
+                $resultHeroines[] = $heroines->getRandomHeroine();
+            }
         }
         return new \Heroines($resultHeroines);
     }
