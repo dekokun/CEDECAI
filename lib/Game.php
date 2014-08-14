@@ -19,16 +19,16 @@ class Game {
      */
     protected $heroines;
     /**
-     * @var RuleSelector
+     * @var \Rule\RuleSelector
      */
     protected $ruleSelector;
 
     public function __construct() {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
         $this->setting = new GameSettings();
-        $this->ruleSelector = new RuleSelector([
-            new RandomHolidayRule(),
-            new RandomWeekdayRule(),
+        $this->ruleSelector = new \Rule\RuleSelector([
+            new \Rule\RandomHolidayRule(),
+            new \Rule\RandomWeekdayRule(),
         ]);
     }
 
