@@ -14,7 +14,7 @@ class AllOneSelect extends Rule {
         $heroineNums = [];
         $maxHeroines = $heroines->getMaxEnthusiasmHeroines();
         $selectedHeroine = $maxHeroines->getRandomHeroine();
-        for ($i = 0; $i < $turn->nextDayCount(); $i++) {
+        foreach($turn->dayIter() as $_) {
             $heroineNums[] = $selectedHeroine->getIndex();
         }
         return $heroineNums;
