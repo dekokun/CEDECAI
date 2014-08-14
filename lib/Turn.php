@@ -12,6 +12,12 @@ class Turn {
         $this->nextDayKind = $dayKind;
     }
 
+    public function dayIter() {
+        for ($i = 0; $i < $this->nextDayCount(); $i++) {
+            yield $i;
+        }
+    }
+
     /**
      * @return int
      */
