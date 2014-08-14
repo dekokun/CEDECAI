@@ -3,7 +3,7 @@
 namespace Rule;
 
 class RandomWeekday extends Rule {
-    public function evaluate(\Heroines $heroines, \Turn $turn) {
+    protected function doEvaluate(\Heroines $heroines, \Turn $turn) {
         if ($turn->nextTurnIsHoliday()) {
             return 0;
         }

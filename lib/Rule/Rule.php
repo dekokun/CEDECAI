@@ -8,7 +8,11 @@ abstract class Rule {
      * @param \Turn $turn
      * @return int
      */
-    abstract public function evaluate(\Heroines $heroines, \Turn $turn);
+    public function evaluate(\Heroines $heroines, \Turn $turn) {
+        return $this->doEvaluate($heroines, $turn);
+    }
+
+    abstract protected function doEvaluate(\Heroines $heroines, \Turn $turn);
 
     /**
      * @param \Heroines $heroines
