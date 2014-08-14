@@ -2,7 +2,7 @@
 
 namespace Rule;
 
-class RandomHolidayRule extends Rule {
+class RandomHoliday extends Rule {
     public function evaluate(\Heroines $heroines, \Turn $turn) {
         if ($turn->nextTurnIsWeekDay()) {
             return 0;

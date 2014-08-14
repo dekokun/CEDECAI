@@ -27,8 +27,8 @@ class Game {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
         $this->setting = new GameSettings();
         $this->ruleSelector = new \Rule\RuleSelector([
-            new \Rule\RandomHolidayRule(),
-            new \Rule\RandomWeekdayRule(),
+            new \Rule\RandomHoliday(),
+            new \Rule\RandomWeekday(),
         ]);
     }
 
