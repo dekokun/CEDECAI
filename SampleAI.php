@@ -28,7 +28,7 @@ class Heroines implements ArrayAccess, Iterator, Countable {
 
     /**
      * オフセットが存在するかどうか
-     * @param mixed offset 調べたいオフセット
+     * @param mixed $offset 調べたいオフセット
      * @return bool 成功した場合に TRUE を、失敗した場合に FALSE を返します。
      */
     public function offsetExists ($offset) {
@@ -36,7 +36,7 @@ class Heroines implements ArrayAccess, Iterator, Countable {
     }
     /**
      * オフセットを取得する
-     * @param mixed offset 調べたいオフセット
+     * @param mixed $offset 調べたいオフセット
      * @return mixed 指定したオフセットの値
      */
     public function offsetGet ($offset) {
@@ -44,15 +44,15 @@ class Heroines implements ArrayAccess, Iterator, Countable {
     }
     /**
      * オフセットを設定する
-     * @param mixed offset 調べたいオフセット
-     * @param mixed value 設定したい値
+     * @param mixed $offset 調べたいオフセット
+     * @param mixed $value 設定したい値
      */
     public function offsetSet ($offset ,$value ) {
         $this->heroines[$offset] = $value;
     }
     /**
      * オフセットの設定を解除する
-     * @param mixed offset 設定解除したいオフセット
+     * @param mixed $offset 設定解除したいオフセット
      */
     public function offsetUnset ($offset ) {
         unset($this->heroines[$offset]);
