@@ -38,11 +38,11 @@ class Game {
 
         for ($i = 0; $i < $this->setting->maxTurn; $i++) {
             $this->readData();
-            $heroineNums
+            $heroines
                 = $this->ruleSelector
                 ->choice($this->heroines, $this->turn)
                 ->result($this->heroines, $this->turn);
-            $this->io->outPutArray($heroineNums);
+            $this->io->outPutArray($heroines->toArray());
         }
 
     }

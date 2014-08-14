@@ -17,7 +17,7 @@ abstract class Rule {
     /**
      * @param \Heroines $heroines
      * @param \Turn $turn
-     * @return array
+     * @return \Heroines
      */
     abstract public function result(\Heroines $heroines, \Turn $turn);
 }

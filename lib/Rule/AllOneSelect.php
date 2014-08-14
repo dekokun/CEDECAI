@@ -11,12 +11,12 @@ class AllOneSelect extends Rule {
         return 0;
     }
     public function result(\Heroines $heroines, \Turn $turn) {
-        $heroineNums = [];
+        $resultHeroines = [];
         $maxHeroines = $heroines->getMaxEnthusiasmHeroines();
         $selectedHeroine = $maxHeroines->getRandomHeroine();
         foreach($turn->dayIter() as $_) {
-            $heroineNums[] = $selectedHeroine->getIndex();
+            $resultHeroines[] = $selectedHeroine;
         }
-        return $heroineNums;
+        return new \Heroines($resultHeroines);
     }
 }

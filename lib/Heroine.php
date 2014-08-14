@@ -64,4 +64,8 @@ class Heroine {
         $this->dateCount += $dated;
         $this->dated = $dated;
     }
+
+    public function __toString() {
+        return strval($this->index);
+    }
 }

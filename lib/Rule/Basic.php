@@ -7,12 +7,12 @@ class Basic extends Rule {
         return 1;
     }
     public function result(\Heroines $heroines, \Turn $turn) {
-        $heroineNums = [];
+        $resultHeroines = [];
         if ($turn->nextTurnIsWeekDay()) {
             foreach($turn->dayIter() as $_) {
-                $heroineNums[] = $heroines->getRandomHeroine()->getIndex();
+                $resultHeroines[] = $heroines->getRandomHeroine();
             }
         }
-        return $heroineNums;
+        return new \Heroines($resultHeroines);
     }
 }
