@@ -1,0 +1,14 @@
+{
+    "name": "AILovers",
+    "description": "ai lovers",
+    "repositories": [
+    ],
+    "autoload": {
+        "psr-0": {"": "lib"}
+    },
+    "require": {
+    },
+    "require-dev": {
+    }
+
+}

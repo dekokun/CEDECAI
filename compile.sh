@@ -1,1 +1,1 @@
-# do nothing
+php composer.phar dumpautoload -o
