@@ -28,6 +28,29 @@ class Heroines implements ArrayAccess, Iterator, Countable {
         }));
     }
     /**
+     * @param int $order
+     * @return \Heroines
+     * @throws \Exception
+     */
+    public function getSortByEnthusiasmHeroines($order = SORT_DESC) {
+        $heroines = $this->heroines;
+        usort($heroines, function(\Heroine $heroine1, \Heroine $heroines2) {
+            if ($heroine1->getEnthusiasm() === $heroines2->getEnthusiasm()) {
+                return 0;
+            }
+            return
+                ($heroine1->getEnthusiasm() > $heroines2->getEnthusiasm())
+                    ? -1 : 1;
+        });
+        if ($order === SORT_DESC) {
+            return new static($heroines);
+        }
+        if ($order === SORT_ASC) {
+            return new static(array_reverse($heroines));
+        }
+        throw new \Exception('SORT_ASCかSORT_DESC使ってね');
+    }
+    /**
      * @return int
      */
     public function getMaxEnthusiasm() {

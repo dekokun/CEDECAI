@@ -2,6 +2,9 @@
 
 class Heroine {
     private $enthusiasm;
+    /**
+     * @var int[]
+     */
     private $revealedScores;
     private $realScore;
     private $dated;
@@ -24,6 +27,29 @@ class Heroine {
 
     public function getIndex() {
         return $this->index;
+    }
+
+    /**
+     * @return array
+     */
+    private function getRevealedScoreExcludePlayer() {
+        $revealedScore = $this->revealedScores;
+        array_shift($revealedScore);
+        return $revealedScore;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxRevealedScoreExcludePlayer() {
+        return max($this->getRevealedScoreExcludePlayer());
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlayersScore() {
+        return $this->revealedScores[0];
     }
 
     /**
