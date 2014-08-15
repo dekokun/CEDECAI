@@ -48,7 +48,13 @@ class Heroine {
     /**
      * @return int
      */
-    public function getPlayersScore() {
+    public function getMinRevealedScoreExcludePlayer() {
+        return min($this->getRevealedScoreExcludePlayer());
+    }
+    /**
+     * @return int
+     */
+    public function getPlayerScore() {
         return $this->revealedScores[0];
     }
 
