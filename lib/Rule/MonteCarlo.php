@@ -4,7 +4,7 @@ namespace Rule;
 
 class MonteCarlo extends Rule
 {
-    const TRIAL_COUNT = 10;
+    const TRIAL_COUNT = 50;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
     {
@@ -13,6 +13,7 @@ class MonteCarlo extends Rule
 
     public function result(\Heroines $heroines, \Turn $turn)
     {
+        logging('count :: ' . static::TRIAL_COUNT);
         $myPointChoiceCombination = $this->myPointChoiceCombination($turn);
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         for ($i = 0; $i < static::TRIAL_COUNT; $i++) {
