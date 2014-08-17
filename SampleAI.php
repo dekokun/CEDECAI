@@ -7,6 +7,15 @@ function logging($message) {
     fputs(STDERR, $message);
 }
 
+    function __xhprof_save()
+    {
+        $data = xhprof_disable();
+        $runs = new XHProfRuns_Default('/tmp');
+        $runs->save_run($data, 'hoge');
+    }
+
+    xhprof_enable();
+    register_shutdown_function('__xhprof_save');
 logging('start');
 $game = new Game();
 logging('main');
