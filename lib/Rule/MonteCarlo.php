@@ -42,6 +42,8 @@ class MonteCarlo extends Rule
         $maxTopCount = max($topCounts);
         $maxTopStrategy = array_search($maxTopCount, $topCounts);
         $result = [];
+
+        // 結果の整形
         foreach(
             $myPointChoiceCombination[$maxTopStrategy] as $heroineIndex => $count
         ) {
