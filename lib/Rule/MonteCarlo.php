@@ -36,7 +36,18 @@ class MonteCarlo extends Rule
         $maxTopCount = max($topCounts);
         $maxTopStrategy = array_search($maxTopCount, $topCounts);
         logging($myPointChoiceCombination[$maxTopStrategy]);
-        return new \Heroines($myPointChoiceCombination[$maxTopStrategy]);
+        $result = [];
+        foreach(
+            $myPointChoiceCombination[$maxTopStrategy] as $heroineIndex => $count
+        ) {
+            if ($turn->nextTurnIsHoliday()) {
+                $count = $count / 2;
+            }
+            for($i = 0; $i < $count; $i++) {
+                $result[] = $heroineIndex;
+            }
+        }
+        return new \Heroines($result);
     }
 
     public function isTop(array $points) {
