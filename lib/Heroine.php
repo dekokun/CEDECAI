@@ -69,7 +69,7 @@ class Heroine {
         $this->enthusiasm = $enthusiasm;
     }
 
-    public function getRevealedScore() {
+    public function getRevealedScores() {
         return $this->revealedScores;
     }
 

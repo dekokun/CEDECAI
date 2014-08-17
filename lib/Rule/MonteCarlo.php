@@ -18,6 +18,11 @@ class MonteCarlo extends Rule
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         for ($i = 0; $i < static::TRIAL_COUNT; $i++) {
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
+            foreach($heroines as $heroine) {
+                foreach($heroine->getRevealedScores() as $playerIndex => $point) {
+                    $allRemainPoints[$playerIndex][$heroine->getIndex()] += $point;
+                }
+            }
             foreach ($myPointChoiceCombination as $j => $choice) {
                 // 自分の点数を置き換え
                 $points = $allRemainPoints;
