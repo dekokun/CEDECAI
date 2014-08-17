@@ -3,6 +3,7 @@
 class Turn {
     const WEEKDAY = 'W';
     const HOLIDAY = 'H';
+    const ALL_TURN = 10;
 
     protected $nextTurn;
     protected $nextDayKind;
@@ -25,6 +26,22 @@ class Turn {
         return $this->nextTurn;
     }
 
+    /**
+     * @return int[]
+     */
+    public function getRemainTurns() {
+        $remainTurn = (static::ALL_TURN - $this->getNextTurn()) + 1;
+        if ($remainTurn % 2 === 0) {
+            return [
+                static::HOLIDAY => $remainTurn / 2,
+                static::WEEKDAY => $remainTurn / 2
+            ];
+        }
+        return [
+            static::HOLIDAY => ($remainTurn + 1) / 2,
+            static::WEEKDAY => (($remainTurn + 1) / 2) - 1
+        ];
+    }
     /**
      * @return bool
      */
