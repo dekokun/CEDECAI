@@ -11,18 +11,29 @@ class MonteCarlo extends Rule
 
     public function result(\Heroines $heroines, \Turn $turn)
     {
+        $allRemainPoints = $this->allRemainPoints($heroines, $turn);
+        foreach($this->myPointChoiceCombination($turn) as $choice) {
+
+        }
     }
 
-    public function allRemainPoints(\Turn $turn, \Heroines $heroines) {
+    public function myPointChoiceCombination(\Turn $turn) {
+        if ($turn->nextTurnIsHoliday()) {
+            return [[0, 0, 0, 0, 0, 0, 2, 2], [0, 0, 0, 0, 2, 0, 0, 2]];
+        }
+        return [[0, 0, 0, 0, 2, 0, 2, 1], [0, 0, 0, 1, 1, 0, 2, 1]];
+    }
+
+    public function allRemainPoints(\Heroines $heroines, \Turn $turn) {
         $afterMyActionTurn = new \Turn($turn->getNextTurn() + 1);
-        $me = $this->getRemainPoints($afterMyActionTurn, $heroines);
-        $p1 = $this->getRemainPoints($turn, $heroines);
-        $p2 = $this->getRemainPoints($turn, $heroines);
-        $p3 = $this->getRemainPoints($turn, $heroines);
+        $me = $this->getRemainPoints($heroines, $afterMyActionTurn);
+        $p1 = $this->getRemainPoints($heroines, $turn);
+        $p2 = $this->getRemainPoints($heroines, $turn);
+        $p3 = $this->getRemainPoints($heroines, $turn);
         return [$me, $p1, $p2, $p3];
     }
 
-    public function getRemainPoints(\Turn $turn, $heroines) {
+    public function getRemainPoints(\Heroines $heroines, \Turn $turn) {
         $remainActionCounts = $this->getRemainActionCounts($turn->getRemainTurns());
         $weekDayPoints = $this->getWhichHeroine(
             $remainActionCounts[\Turn::WEEKDAY], $heroines
