@@ -6,7 +6,7 @@ function logging($message) {
     $message = var_export($message, true) . PHP_EOL;
     fputs(STDERR, $message);
 }
-
+if (isset($argv[1]) && $argv[1] == 'hoge') {
     function __xhprof_save()
     {
         $data = xhprof_disable();
@@ -16,6 +16,7 @@ function logging($message) {
 
     xhprof_enable();
     register_shutdown_function('__xhprof_save');
+}
 logging('start');
 $game = new Game();
 logging('main');
