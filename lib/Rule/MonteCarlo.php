@@ -4,7 +4,7 @@ namespace Rule;
 
 class MonteCarlo extends Rule
 {
-    const TRIAL_COUNT = 25;
+    const TRIAL_COUNT = 30;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
     {
@@ -65,11 +65,17 @@ class MonteCarlo extends Rule
         }
         foreach($transposition as $heroineIndex => $heroinePoints) {
             $maxPoints = max($heroinePoints);
+            $minPoints = min($heroinePoints);
             $winPlayers = array_keys($heroinePoints, $maxPoints, true);
-            $point =
-                $heroines->getHeroine($heroineIndex)->getEnthusiasm() / count($winPlayers);
+            $loosePlayers = array_keys($heroinePoints, $minPoints, true);
+            $enthusiasm = $heroines->getHeroine($heroineIndex)->getEnthusiasm();
+            $point = $enthusiasm / count($winPlayers);
+            $loosePoint = $enthusiasm / count($loosePlayers);
             foreach($winPlayers as $index) {
                 $result[$index] += $point;
+            }
+            foreach($loosePlayers as $index) {
+                $result[$index] -= $loosePoint;
             }
         }
         if ($result[0] === max($result)) {
