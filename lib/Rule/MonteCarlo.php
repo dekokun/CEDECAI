@@ -18,7 +18,7 @@ class MonteCarlo extends Rule
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         for ($i = 0; $i < static::TRIAL_COUNT; $i++) {
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
-            foreach ($myPointChoiceCombination as $i => $choice) {
+            foreach ($myPointChoiceCombination as $j => $choice) {
                 // 自分の点数を置き換え
                 $points = $allRemainPoints;
                 $myPoints = array_map(
@@ -30,7 +30,7 @@ class MonteCarlo extends Rule
                 );
                 $points[0] = $myPoints;
                 if ($this->isTop($heroines, $points)) {
-                    $topCounts[$i] = $topCounts;
+                    $topCounts[$j] += 1;
                 }
             }
         }
