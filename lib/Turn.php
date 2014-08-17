@@ -8,8 +8,11 @@ class Turn {
     protected $nextTurn;
     protected $nextDayKind;
 
-    public function __construct($turn, $dayKind) {
+    public function __construct($turn, $dayKind = null) {
         $this->nextTurn = intval($turn);
+        if ($dayKind === null) {
+            $dayKind = ($turn % 2 === 0) ? static::HOLIDAY : static::WEEKDAY;
+        }
         $this->nextDayKind = $dayKind;
     }
 
