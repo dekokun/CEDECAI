@@ -28,7 +28,7 @@ class MonteCarlo extends Rule
                     $choice
                 );
                 $points[0] = $myPoints;
-                if ($this->isTop($points)) {
+                if ($this->isTop($heroines, $points)) {
                     $topCounts[$i] = $topCounts;
                 }
             }
@@ -50,8 +50,27 @@ class MonteCarlo extends Rule
         return new \Heroines($result);
     }
 
-    public function isTop(array $points) {
-        return true;
+    public function isTop(\Heroines $heroines, array $points) {
+        $transposition = array_fill(0, count($heroines), []);
+        $result = array_fill(0, 4, 0);
+        foreach($points as $playerPoints) {
+            foreach ($playerPoints as $heroineIndex => $playerPoint) {
+                $transposition[$heroineIndex][] = $playerPoint;
+            }
+        }
+        foreach($transposition as $heroineIndex => $heroinePoints) {
+            $maxPoints = max($heroinePoints);
+            $winPlayers = array_keys($heroinePoints, $maxPoints, true);
+            $point =
+                $heroines->getHeroine($heroineIndex)->getEnthusiasm() / count($winPlayers);
+            foreach($winPlayers as $index) {
+                $result[$index] += $point;
+            }
+        }
+        if ($result[0] === max($result)) {
+            return true;
+        }
+        return false;
     }
 
     /**

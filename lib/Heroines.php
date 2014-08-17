@@ -50,6 +50,14 @@ class Heroines implements ArrayAccess, Iterator, Countable {
         }
         throw new \Exception('SORT_ASCかSORT_DESC使ってね');
     }
+
+    /**
+     * @param $index
+     * @return \Heroine
+     */
+    public function getHeroine($index) {
+        return $this->heroines[$index];
+    }
     /**
      * @return int
      */
