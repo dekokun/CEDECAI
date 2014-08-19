@@ -71,8 +71,11 @@ class Game {
         }
         if ($this->turn->previousTurnIsHoliday()) {
             $dated = $this->io->getInArray();
-            foreach($this->heroines as $i => $_) {
-                $this->heroines[$i]->setDated((integer)$dated[$i]);
+            $allDateCount = array_sum($dated);
+            if ($allDateCount) {
+                foreach ($this->heroines as $i => $_) {
+                    $this->heroines[$i]->setDated((integer)$dated[$i] / $allDateCount);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ namespace Rule;
 
 class MonteCarlo extends Rule
 {
-    const TRIAL_COUNT = 30;
+    const TRIAL_COUNT = 20;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
     {
@@ -17,9 +17,15 @@ class MonteCarlo extends Rule
         $myPointChoiceCombination = $this->myPointChoiceCombination($turn);
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         for ($i = 0; $i < static::TRIAL_COUNT; $i++) {
+            // 過去の実績を足す
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
             foreach($heroines as $heroine) {
+                $allRemainPoints[0][$heroine->getIndex()] += $heroine->getRealScore();
+                foreach([1,2,3] as $playerIndex) {
+                     $allRemainPoints[$playerIndex][$heroine->getIndex()] += ($heroine->getDateCount() * 4);
+                }
                 foreach($heroine->getRevealedScores() as $playerIndex => $point) {
+                    if ($playerIndex === 0) {continue;}
                     $allRemainPoints[$playerIndex][$heroine->getIndex()] += $point;
                 }
             }

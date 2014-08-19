@@ -30,6 +30,16 @@ class Turn {
     }
 
     /**
+     * @return int
+     */
+    public function holidayCountToNow() {
+        if ($this->nextTurnIsHoliday()) {
+            return ($this->nextTurn - 2) / 2;
+        }
+        return ($this->nextTurn - 1) / 2;
+    }
+
+    /**
      * @return int[]
      */
     public function getRemainTurns() {

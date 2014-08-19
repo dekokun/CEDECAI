@@ -18,6 +18,14 @@ class Heroines implements ArrayAccess, Iterator, Countable {
         }));
     }
 
+    public function alldateCount() {
+        $result = 0;
+        foreach($this->heroines as $heroine) {
+            $result += $heroine->getDateCount();
+        }
+        return $result;
+    }
+
     /**
      * @return \Heroines
      */
