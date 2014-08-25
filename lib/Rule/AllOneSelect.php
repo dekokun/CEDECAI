@@ -5,7 +5,7 @@ namespace Rule;
 class AllOneSelect extends Rule {
     protected function doEvaluate(\Heroines $heroines, \Turn $turn) {
         if ($turn->getNextTurn() === 1) {
-            return 100;
+            return 0;
         }
         return 0;
     }
