@@ -52,7 +52,8 @@ class MonteCarlo extends Rule
             }
         }
         $maxTopCount = max($topCounts);
-        $maxTopStrategy = array_search($maxTopCount, $topCounts);
+        $maxTopStrategies = array_keys($topCounts, $maxTopCount, true);
+        $maxTopStrategy = $maxTopStrategies[array_rand($maxTopStrategies)];
         $result = [];
 
         // 結果の整形
