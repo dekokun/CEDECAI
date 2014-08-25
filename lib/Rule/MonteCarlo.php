@@ -4,7 +4,8 @@ namespace Rule;
 
 class MonteCarlo extends Rule
 {
-    const TRIAL_COUNT = 20;
+    const HOLIDAY_TRIAL_COUNT = 20;
+    const WEEKDAY_TRIAL_RATE = 5;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
     {
@@ -13,10 +14,15 @@ class MonteCarlo extends Rule
 
     public function result(\Heroines $heroines, \Turn $turn)
     {
-        logging('count :: ' . static::TRIAL_COUNT);
         $myPointChoiceCombination = $this->myPointChoiceCombination($turn);
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
-        for ($i = 0; $i < static::TRIAL_COUNT; $i++) {
+        if ($turn->nextTurnIsHoliday()) {
+            $trialCount = static::HOLIDAY_TRIAL_COUNT * static::WEEKDAY_TRIAL_RATE;
+        } else {
+            $trialCount = static::HOLIDAY_TRIAL_COUNT;
+        }
+        logging('count :: ' . $trialCount);
+        for ($i = 0; $i < $trialCount; $i++) {
             // 過去の実績を足す
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
             foreach($heroines as $heroine) {
