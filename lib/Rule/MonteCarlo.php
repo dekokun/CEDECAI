@@ -76,10 +76,10 @@ class MonteCarlo extends Rule
         $result = array_fill(0, 4, 0);
         $transposition = $this->transverseMatrix($points);
         foreach($transposition as $heroineIndex => $heroinePoints) {
-            $maxPoints = max($heroinePoints);
-            $minPoints = min($heroinePoints);
-            $winPlayers = array_keys($heroinePoints, $maxPoints, true);
-            $loosePlayers = array_keys($heroinePoints, $minPoints, true);
+            $maxPoint = max($heroinePoints);
+            $minPoint = min($heroinePoints);
+            $winPlayers = array_keys($heroinePoints, $maxPoint, true);
+            $loosePlayers = array_keys($heroinePoints, $minPoint, true);
             $enthusiasm = $heroines->getHeroine($heroineIndex)->getEnthusiasm();
             $point = $enthusiasm / count($winPlayers);
             $loosePoint = $enthusiasm / count($loosePlayers);
