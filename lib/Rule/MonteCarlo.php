@@ -42,17 +42,7 @@ class MonteCarlo extends Rule
                 }
             }
             foreach ($myPointChoiceCombination as $j => $choice) {
-                // 自分の点数を置き換え
-                $points = $allRemainPoints;
-                $myPoints = array_map(
-                    function ($a, $b) {
-                        return $a + $b;
-                    },
-                    $points[0],
-                    $choice
-                );
-                $points[0] = $myPoints;
-                if ($this->isTop($heroines, $points)) {
+                if ($this->isTop($heroines, $allRemainPoints, $choice)) {
                     $topCounts[$j] += 1;
                 }
             }
@@ -76,7 +66,16 @@ class MonteCarlo extends Rule
         return new \Heroines($result);
     }
 
-    public function isTop(\Heroines $heroines, array $points) {
+    public function isTop(\Heroines $heroines, array $points, array $choice) {
+        // $pointsは次のターンの自分の行動分の得点が含まれていないため、その代わりに自分が選んだ行動の得点を足す
+        $myPoints = array_map(
+            function ($a, $b) {
+                return $a + $b;
+            },
+            $points[0],
+            $choice
+        );
+        $points[0] = $myPoints;
         $result = array_fill(0, 4, 0);
         $transposition = $this->transverseMatrix($points);
         foreach($transposition as $heroineIndex => $heroinePoints) {
