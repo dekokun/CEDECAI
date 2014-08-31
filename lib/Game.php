@@ -27,7 +27,8 @@ class Game {
         $this->io = new StdIO(fopen('php://stdin', 'r'));
         $this->setting = new GameSettings();
         $this->ruleSelector = new \Rule\RuleSelector([
-            new \Rule\MonteCarlo(),
+            new \Rule\MonteCarloFirstHalf(),
+            new \Rule\MonteCarloSecondHalf(),
             new \Rule\AllOneSelect(),
         ]);
     }
