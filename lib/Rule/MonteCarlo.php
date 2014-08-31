@@ -80,7 +80,7 @@ class MonteCarlo extends Rule
             $minPoint = min($heroinePoints);
             $winPlayers = array_keys($heroinePoints, $maxPoint, true);
             $loosePlayers = array_keys($heroinePoints, $minPoint, true);
-            $enthusiasm = $heroines->getHeroine($heroineIndex)->getEnthusiasm();
+            $enthusiasm = $heroines->getEnthusiasms()[$heroineIndex];
             $point = $enthusiasm / count($winPlayers);
             $loosePoint = $enthusiasm / count($loosePlayers);
             foreach($winPlayers as $index) {

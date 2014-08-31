@@ -91,10 +91,14 @@ class Heroines implements ArrayAccess, Iterator, Countable {
     /**
      * @return array
      */
-    private function getEnthusiasms() {
-        return array_map(function(\Heroine $heroine) {
-            return $heroine->getEnthusiasm();
-        }, $this->toArray());
+    public function getEnthusiasms() {
+        static $cache;
+        if (! $cache) {
+            $cache = array_map(function(\Heroine $heroine) {
+                    return $heroine->getEnthusiasm();
+                }, $this->toArray());
+        }
+        return $cache;
     }
 
 
