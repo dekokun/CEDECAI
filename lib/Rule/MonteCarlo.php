@@ -26,12 +26,16 @@ class MonteCarlo extends Rule
             // 過去の実績を足す
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
             foreach($heroines as $heroine) {
+                // 休日のデートを加味したスコアは自分(0番)のものは完全にわかっているためそれを足す
                 $allRemainPoints[0][$heroine->getIndex()]
                     += $heroine->getRealScore();
+
+                // 自分以外は、休日のデートはわからないため期待値を足す
                 foreach([1,2,3] as $playerIndex) {
                      $allRemainPoints[$playerIndex][$heroine->getIndex()]
                          += ($heroine->getDateCount() * 4);
                 }
+                // 自分以外のわかっている値を足す
                 foreach($heroine->getRevealedScores() as $playerIndex => $point) {
                     if ($playerIndex === 0) {continue;}
                     $allRemainPoints[$playerIndex][$heroine->getIndex()] += $point;
