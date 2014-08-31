@@ -71,13 +71,8 @@ class MonteCarlo extends Rule
     }
 
     public function isTop(\Heroines $heroines, array $points) {
-        $transposition = array_fill(0, 8, []);
         $result = array_fill(0, 4, 0);
-        foreach($points as $playerPoints) {
-            foreach ($playerPoints as $heroineIndex => $playerPoint) {
-                $transposition[$heroineIndex][] = $playerPoint;
-            }
-        }
+        $transposition = $this->transverseMatrix($points);
         foreach($transposition as $heroineIndex => $heroinePoints) {
             $maxPoints = max($heroinePoints);
             $minPoints = min($heroinePoints);
@@ -97,6 +92,16 @@ class MonteCarlo extends Rule
             return true;
         }
         return false;
+    }
+
+    private function transverseMatrix($points) {
+        return call_user_func_array(
+            "array_map",
+            array_merge(
+                array(null),
+                $points
+            )
+        );
     }
 
     /**
