@@ -5,7 +5,7 @@ namespace Rule;
 class MonteCarlo extends Rule
 {
     const HOLIDAY_TRIAL_COUNT = 20;
-    const WEEKDAY_TRIAL_RATE = 5;
+    const WEEKDAY_TRIAL_RATE = 20;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
     {
