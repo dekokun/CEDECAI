@@ -88,10 +88,8 @@ class MonteCarlo extends Rule
         $result = array_fill(0, 4, 0);
         $points = $this->reflectMyChoice($points, $choice);
         foreach($points as $heroineIndex => $heroinePoints) {
-            $heroinePointsCopy = $heroinePoints;
-            sort($heroinePointsCopy);
-            $maxPoint = $heroinePointsCopy[3];
-            $minPoint = $heroinePointsCopy[0];
+            $maxPoint = max($heroinePoints);
+            $minPoint = min($heroinePoints);
             $winPlayers = array_keys($heroinePoints, $maxPoint, true);
             $loosePlayers = array_keys($heroinePoints, $minPoint, true);
             $enthusiasm = $heroines->getEnthusiasms()[$heroineIndex];
