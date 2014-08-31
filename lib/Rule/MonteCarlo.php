@@ -871,6 +871,13 @@ class MonteCarlo extends Rule
         return $combies[\Turn::WEEKDAY];
     }
 
+    /**
+     * 皆の最後までの行動をランダムに選択
+     * ただし、自分のものだけは次のターンは自分で選ぶため、次の次のターンからの行動を返す
+     * @param \Heroines $heroines
+     * @param \Turn $turn
+     * @return array
+     */
     public function allRemainPoints(\Heroines $heroines, \Turn $turn)
     {
         $afterMyActionTurn = new \Turn($turn->getNextTurn() + 1);
