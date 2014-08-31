@@ -33,7 +33,7 @@ class Game {
     }
 
     public function main() {
-        $this->io->outPut('READY');
+        $this->io->outPut('READY' . PHP_EOL);
         $this->readGameSetting();
 
         for ($i = 0; $i < $this->setting->maxTurn; $i++) {
