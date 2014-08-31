@@ -26,9 +26,11 @@ class MonteCarlo extends Rule
             // 過去の実績を足す
             $allRemainPoints = $this->allRemainPoints($heroines, $turn);
             foreach($heroines as $heroine) {
-                $allRemainPoints[0][$heroine->getIndex()] += $heroine->getRealScore();
+                $allRemainPoints[0][$heroine->getIndex()]
+                    += $heroine->getRealScore();
                 foreach([1,2,3] as $playerIndex) {
-                     $allRemainPoints[$playerIndex][$heroine->getIndex()] += ($heroine->getDateCount() * 4);
+                     $allRemainPoints[$playerIndex][$heroine->getIndex()]
+                         += ($heroine->getDateCount() * 4);
                 }
                 foreach($heroine->getRevealedScores() as $playerIndex => $point) {
                     if ($playerIndex === 0) {continue;}
