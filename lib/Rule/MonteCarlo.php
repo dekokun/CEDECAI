@@ -41,10 +41,13 @@ class MonteCarlo extends Rule
                     $allRemainPoints[$playerIndex][$heroine->getIndex()] += $point;
                 }
             }
+            $firstFlag = true;
+            $transversePoints = $this->transverseMatrix($allRemainPoints);
             foreach ($myPointChoiceCombination as $j => $choice) {
-                if ($this->isTop($heroines, $allRemainPoints, $choice)) {
+                if ($this->isTop($heroines, $transversePoints, $choice, $firstFlag)) {
                     $topCounts[$j] += 1;
                 }
+                $firstFlag = false;
             }
         }
         $maxTopCount = max($topCounts);
@@ -66,19 +69,25 @@ class MonteCarlo extends Rule
         return new \Heroines($result);
     }
 
-    public function isTop(\Heroines $heroines, array $points, array $choice) {
+    /**
+     * 自分の今回のターンの値が反映されていないポイントに反映する
+     * @param array $points
+     * @param array $choice
+     * @return array
+     */
+    private function reflectMyChoice(array $points, array $choice) {
+        $result = $points;
+        foreach($choice as $heroineIndex => $point) {
+            $result[$heroineIndex][0] += $point;
+        }
+        return $result;
+    }
+
+    public function isTop(\Heroines $heroines, array $points, array $choice, $firstFlag) {
         // $pointsは次のターンの自分の行動分の得点が含まれていないため、その代わりに自分が選んだ行動の得点を足す
-        $myPoints = array_map(
-            function ($a, $b) {
-                return $a + $b;
-            },
-            $points[0],
-            $choice
-        );
-        $points[0] = $myPoints;
         $result = array_fill(0, 4, 0);
-        $transposition = $this->transverseMatrix($points);
-        foreach($transposition as $heroineIndex => $heroinePoints) {
+        $points = $this->reflectMyChoice($points, $choice);
+        foreach($points as $heroineIndex => $heroinePoints) {
             $maxPoint = max($heroinePoints);
             $minPoint = min($heroinePoints);
             $winPlayers = array_keys($heroinePoints, $maxPoint, true);
