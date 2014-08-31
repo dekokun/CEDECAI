@@ -23,4 +23,15 @@
         timeoutForLargeTests="60"
         strict="true"
         verbose="true">
+    <testsuites>
+            <testsuite name="all">
+                <directory>test</directory>
+            </testsuite>
+    </testsuites>
+    <filter>
+        <!-- コードカバレッジ測定対象から除外 -->
+        <blacklist>
+            <directory suffix=".php">vendor</directory>
+        </blacklist>
+    </filter>
 </phpunit>
