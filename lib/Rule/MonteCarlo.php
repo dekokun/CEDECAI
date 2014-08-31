@@ -2,9 +2,10 @@
 
 namespace Rule;
 
+
 class MonteCarlo extends Rule
 {
-    const HOLIDAY_TRIAL_COUNT = 20;
+    const HOLIDAY_TRIAL_COUNT = 3;
     const WEEKDAY_TRIAL_RATE = 20;
 
     protected function doEvaluate(\Heroines $heroines, \Turn $turn)
@@ -14,6 +15,7 @@ class MonteCarlo extends Rule
 
     public function result(\Heroines $heroines, \Turn $turn)
     {
+        $this->measure = new \Measure();
         $myPointChoiceCombination = $this->myPointChoiceCombination($turn);
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         if ($turn->nextTurnIsHoliday()) {
@@ -53,6 +55,7 @@ class MonteCarlo extends Rule
                 }
             }
         }
+        $this->measure->outPut();
         $maxTopCount = max($topCounts);
         $maxTopStrategies = array_keys($topCounts, $maxTopCount, true);
         $maxTopStrategy = $maxTopStrategies[array_rand($maxTopStrategies)];
@@ -76,19 +79,29 @@ class MonteCarlo extends Rule
         $result = array_fill(0, 4, 0);
         $transposition = $this->transverseMatrix($points);
         foreach($transposition as $heroineIndex => $heroinePoints) {
+            $this->measure->measure('foreach');
             $maxPoints = max($heroinePoints);
+            $this->measure->measure('max');
             $minPoints = min($heroinePoints);
+            $this->measure->measure('min');
             $winPlayers = array_keys($heroinePoints, $maxPoints, true);
+            $this->measure->measure('array_keys1');
             $loosePlayers = array_keys($heroinePoints, $minPoints, true);
+            $this->measure->measure('array_keys2');
             $enthusiasm = $heroines->getHeroine($heroineIndex)->getEnthusiasm();
+            $this->measure->measure('getEnthusiasm');
             $point = $enthusiasm / count($winPlayers);
+            $this->measure->measure('devision');
             $loosePoint = $enthusiasm / count($loosePlayers);
+            $this->measure->measure('loose');
             foreach($winPlayers as $index) {
                 $result[$index] += $point;
             }
+            $this->measure->measure('result plus');
             foreach($loosePlayers as $index) {
                 $result[$index] -= $loosePoint;
             }
+            $this->measure->measure('result minus');
         }
         if ($result[0] === max($result)) {
             return true;
