@@ -14,6 +14,7 @@ class MonteCarlo extends Rule
 
     public function result(\Heroines $heroines, \Turn $turn)
     {
+        exit;
         $myPointChoiceCombination = $this->myPointChoiceCombination($turn);
         $topCounts = array_fill(0, count($myPointChoiceCombination), 0);
         if ($turn->nextTurnIsHoliday()) {
