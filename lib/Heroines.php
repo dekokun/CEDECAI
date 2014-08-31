@@ -18,19 +18,6 @@ class Heroines implements ArrayAccess, Iterator, Countable {
         }));
     }
 
-    /**
-     * @return \Heroines
-     */
-    public function getSecondEnthusiasmHeroines() {
-        $enthusisms = $this->getEnthusiasms();
-        $uniqueArray = array_unique($enthusisms);
-        rsort($uniqueArray);
-        $secondEnthusiasm = $uniqueArray[1];
-        return new static(
-            array_filter($this->toArray(), function(\Heroine $heroine) use ($secondEnthusiasm) {
-                return $heroine->getEnthusiasm() === $secondEnthusiasm;
-            }));
-    }
     public function alldateCount() {
         $result = 0;
         foreach($this->heroines as $heroine) {
@@ -91,15 +78,6 @@ class Heroines implements ArrayAccess, Iterator, Countable {
      */
     public function getMinEnthusiasm() {
         return min($this->getEnthusiasms());
-    }
-    /**
-     * @param int $count
-     * @return \Heroines
-     */
-    public function getRandomHeroines($count) {
-        $heroines = $this->toArray();
-        shuffle($heroines);
-        return new \Heroines(array_slice($heroines, 0, $count));
     }
 
     /**

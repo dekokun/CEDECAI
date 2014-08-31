@@ -28,7 +28,7 @@ class Game {
         $this->setting = new GameSettings();
         $this->ruleSelector = new \Rule\RuleSelector([
             new \Rule\MonteCarlo(),
-            new \Rule\First(),
+            new \Rule\AllOneSelect(),
         ]);
     }
 

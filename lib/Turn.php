@@ -4,8 +4,6 @@ class Turn {
     const WEEKDAY = 'W';
     const HOLIDAY = 'H';
     const ALL_TURN = 10;
-    const HOLIDAY_COUNT = 2;
-    const WEEKDAY_COUNT = 5;
 
     protected $nextTurn;
     protected $nextDayKind;
@@ -87,8 +85,8 @@ class Turn {
 
     public function nextDayCount() {
         if ($this->nextTurnIsWeekDay()) {
-            return static::WEEKDAY_COUNT;
+            return 5;
         }
-        return static::HOLIDAY_COUNT;
+        return 2;
     }
 }
