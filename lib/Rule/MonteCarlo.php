@@ -4,7 +4,7 @@ namespace Rule;
 
 abstract class MonteCarlo extends Rule
 {
-    const HOLIDAY_TRIAL_COUNT = 28;
+    const HOLIDAY_TRIAL_COUNT = 26;
     const WEEKDAY_TRIAL_RATE = 18;
 
     public function result(\Heroines $heroines, \Turn $turn)
