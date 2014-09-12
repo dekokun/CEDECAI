@@ -1,6 +1,10 @@
 CEDECAI
 =======
 
+以下内容をまとめつつブログ書きました。
+
+- [PHPを使ったり4000円課金したりしてCEDEC AI CHALLENGE 準優勝に至るまでの軌跡](http://dekokun.github.io/posts/2014-09-07.html)
+
 ## 戦略
 
 - ルールベースAIとモンテカルロなAIの組み合わせ
